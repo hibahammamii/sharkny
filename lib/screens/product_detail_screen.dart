@@ -86,7 +86,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 width: double.infinity,
                 child: Text(
-                  widget.loadedProduct!.title!,
+                  widget.loadedProduct!.title?? "",
                   textAlign: TextAlign.start,
                   softWrap: true,
                   style: AppTextStyle.mainTextStyle.copyWith(fontSize: 20),
@@ -151,7 +151,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 width: double.infinity,
                 child: Text(
-                  widget.loadedProduct!.desc!,
+                  widget.loadedProduct!.desc ?? "",
                   textAlign: TextAlign.start,
                   maxLines: more == false ? 2 : 6,
                   overflow: TextOverflow.ellipsis,

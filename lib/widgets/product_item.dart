@@ -41,7 +41,8 @@ class ProductItem extends StatelessWidget {
                 child: product.image != null ?CachedNetworkImage(
                   imageUrl: product.image!,
                   placeholder: (context, url) => const CircularProgressIndicator(
-                    backgroundColor: colorPrimary,
+                      valueColor: AlwaysStoppedAnimation<Color>(colorAccent),
+                    strokeWidth: 2,
                   ),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                   fit: BoxFit.cover,

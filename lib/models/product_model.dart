@@ -33,6 +33,8 @@ class Product with ChangeNotifier{
     desc = json["desc"].toString();
     status = json["status"];
     active = json["active"];
+    image = json["pic"];
+    quantity =json["qty"];
     adminNotes = json["admin_notes"].toString();
     createdAt = json["created_at"].toString();
     updatedAt = json["updated_at"].toString();}
@@ -58,6 +60,8 @@ class Product with ChangeNotifier{
     data["admin_notes"] = adminNotes;
     data["created_at"] = createdAt;
     data["updated_at"] = updatedAt;
+    data["pic"] =image;
+    data["qty"] = quantity;
     return data;
   }
 }

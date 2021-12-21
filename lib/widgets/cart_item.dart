@@ -96,7 +96,7 @@ class _CartItemState extends State<CartItem> {
                   Image.network(
                        widget.urlImage!,
                        fit: BoxFit.contain,
-                       width: 100,
+                       width: 80,
                        height: 80,
                      ):Container(),
                   const SizedBox(width: 10,),
@@ -125,7 +125,7 @@ class _CartItemState extends State<CartItem> {
                             children: [
                                InkWell(
                                 onTap: (){
-                                  if (widget.quantity < 10) ++widget.quantity;
+                                  if (widget.quantity <4) ++widget.quantity;
                                   setState(() {
 
                                   });
@@ -164,7 +164,7 @@ class _CartItemState extends State<CartItem> {
                               ),
                                InkWell(
                                 onTap:  (){
-                                  if (widget.quantity >0) --widget.quantity;
+                                  if (widget.quantity >1) --widget.quantity;
                                   setState(() {
 
                                   });

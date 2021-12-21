@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:sharekny_app/providers/cart_provider.dart';
 import 'package:sharekny_app/screens/cart_screen.dart';
 import 'package:sharekny_app/screens/search_screen.dart';
 import 'package:sharekny_app/services/localization/app_localization.dart';
@@ -73,6 +75,7 @@ class Constants {
                   "assets/icons/arrow_right.png",
                   color: iconColor ?? lightGrey,
                 )),
+
       actions: [
         IconButton(
             onPressed: () {
@@ -296,33 +299,37 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               Row(
                 children: [
-                  InkWell(
-                      onTap: () => locator<NavigationServices>()
-                          .navigateTo(CartScreen.routeName),
-                      child: const Icon(
-                        Icons.shopping_cart_outlined,
+                  Badge(
+                      badgeContent: Consumer<CartProvider>(
+                        builder: (_, data, __) {
+                          return Text(
+                            data.itemCount.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption!
+                                .apply(color: Colors.white),
+                          );
+                        },
+                      ),
+                      child: InkWell(
+                          onTap: () => locator<NavigationServices>()
+                              .navigateTo(CartScreen.routeName),
+                          child: const Icon(
+                            Icons.shopping_cart_outlined,
+                            color: logoColor,
+                          )),
+                      position: BadgePosition.topStart(start: -9, top: -7)
+                  ),
+                  IconButton(
+                      onPressed: () => locator<NavigationServices>()
+                          .navigateTo(SearchScreen.routeName),
+                      icon: const Icon(
+                        Icons.search,
                         color: logoColor,
                       )),
-                  Badge(
-                    badgeContent: Text(
-                      "0",
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption!
-                          .apply(color: Colors.white),
-                    ),
-                    child: IconButton(
-                        onPressed: () => locator<NavigationServices>()
-                            .navigateTo(SearchScreen.routeName),
-                        icon: const Icon(
-                          Icons.search,
-                          color: logoColor,
-                        )),
-                    position: BadgePosition.topStart(start: -30, top: 1),
-                  ),
-
                 ],
               )
+
             ],
           ),
         ),

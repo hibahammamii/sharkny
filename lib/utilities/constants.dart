@@ -52,7 +52,8 @@ class Constants {
       {Color? iconColor,
       Function? onTap,
       IconData? icon,
-      Function? onPressed}) {
+      Function? onPressed,
+      Widget? action}) {
     return AppBar(
       elevation: 0,
       backgroundColor: Colors.white,
@@ -77,18 +78,8 @@ class Constants {
                 )),
 
       actions: [
-        IconButton(
-            onPressed: () {
-              if (onPressed == null) {
-                locator<NavigationServices>().goBack();
-                return;
-              }
-              onPressed();
-            },
-            icon: Icon(
-              icon,
-              color: iconColor,
-            )),
+      if(action != null)
+        action,
       ],
     );
   }
@@ -318,7 +309,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                             Icons.shopping_cart_outlined,
                             color: logoColor,
                           )),
-                      position: BadgePosition.topStart(start: -9, top: -7)
+                      position: BadgePosition.topStart(start: -9, top: -13)
                   ),
                   IconButton(
                       onPressed: () => locator<NavigationServices>()

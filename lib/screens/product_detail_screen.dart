@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -11,6 +12,7 @@ import 'package:sharekny_app/services/navigation_services.dart';
 import 'package:sharekny_app/utilities/constants.dart';
 import 'package:sharekny_app/utilities/get_it.dart';
 import 'package:sharekny_app/utilities/styles.dart';
+import 'package:sharekny_app/widgets/heart_button.dart';
 
 import 'cart_screen.dart';
 
@@ -49,9 +51,31 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       child: Scaffold(
         appBar: Constants.appBar(context, "",
             iconColor: blackColor,
-            icon: Icons.shopping_cart_outlined,
-            onPressed: () => locator<NavigationServices>()
-                .navigateTo(CartScreen.routeName)) as PreferredSizeWidget?,
+            action:  Badge(
+                badgeContent: Consumer<CartProvider>(
+                  builder: (_, data, __) {
+                    return Text(
+                      data.itemCount.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption!
+                          .apply(color: Colors.white),
+                    );
+                  },
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5,right: 5),
+                  child: InkWell(
+                      onTap: () => locator<NavigationServices>()
+                          .navigateTo(CartScreen.routeName),
+                      child: const Icon(
+                        Icons.shopping_cart_outlined,
+                        color: logoColor,
+                      )),
+                ),
+                position: BadgePosition.topStart(top: 5,start: 0)
+            ),
+        ) as PreferredSizeWidget?,
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -97,12 +121,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Text(
-                  '\$${widget.loadedProduct!.price}',
-                  style: const TextStyle(
-                    color: colorAccent,
-                    fontSize: 16,
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${widget.loadedProduct!.price} L.E',
+                      style: const TextStyle(
+                        color: colorAccent,
+                        fontSize: 16,
+                      ),
+                    ),
+                    HeartButton(
+                      product: widget.loadedProduct,
+                      size: 18.0,
+                      color: lightGrey,),
+
+                  ],
                 ),
               ),
               const SizedBox(

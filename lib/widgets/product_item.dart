@@ -40,18 +40,19 @@ class ProductItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6),
                 child: product.image != null ?CachedNetworkImage(
                   imageUrl: product.image!,
+                  width: 120,
+                  height: 110,
                   placeholder: (context, url) => const CircularProgressIndicator(
                       valueColor: AlwaysStoppedAnimation<Color>(colorAccent),
                     strokeWidth: 2,
                   ),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                   fit: BoxFit.cover,
-                  width: 140,
-                  height: 110,
+
                 ):Container(),
               ),
               const SizedBox(
-                height: 8,
+                height: 4,
               ),
               SingleChildScrollView(
                 child: Column(
@@ -60,19 +61,21 @@ class ProductItem extends StatelessWidget {
                   children: [
                     Text(
                       product.title!,
-                      style: AppTextStyle.subTextStyle
-                          .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
-                    ),
-                    const SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      "${AppLocalizations.of(context)!.translate("gain")} :",
+
+                      overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.subTextStyle
                           .copyWith(fontSize: 14, fontWeight: FontWeight.w400),
                     ),
                     const SizedBox(
-                      height: 4,
+                      height: 1,
+                    ),
+                    Text(
+                      "${AppLocalizations.of(context)!.translate("gain")} :",
+                      style: AppTextStyle.subTextStyle
+                          .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                    ),
+                    const SizedBox(
+                      height: 2,
                     ),
                     SizedBox(
                       width: 140,
@@ -87,14 +90,14 @@ class ProductItem extends StatelessWidget {
                                   color: dangerColor.withOpacity(0.5)),
                               child: Text(product.earn.toString(),
                                   style: AppTextStyle.subTextStyle
-                                      .copyWith(fontSize: 12)),
+                                      .copyWith(fontSize: 10)),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 3, right: 3),
                               child: Text(
                                 "${AppLocalizations.of(context)!.translate("from")}",
                                 style: AppTextStyle.subTextStyle.copyWith(
-                                    fontSize: 14, fontWeight: FontWeight.w400),
+                                    fontSize: 12, fontWeight: FontWeight.w400),
                               ),
                             ),
                             Container(
@@ -104,7 +107,7 @@ class ProductItem extends StatelessWidget {
                                   color: colorAccent.withOpacity(0.2)),
                               child: Text(product.price.toString(),
                                   style: AppTextStyle.subTextStyle
-                                      .copyWith(fontSize: 12)),
+                                      .copyWith(fontSize: 10)),
                             ),
                           ],
                         ),

@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:sharekny_app/models/category_model.dart';
 import 'package:sharekny_app/models/user_model.dart';
+import 'package:sharekny_app/models/wishlist_model.dart';
 import 'package:sharekny_app/providers/auth_provider.dart';
 import 'package:sharekny_app/providers/cart_provider.dart';
 import 'package:sharekny_app/providers/categories_provider.dart';
@@ -36,6 +37,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => CartProvider());
   locator.registerLazySingleton(() => AuthProvider());
   locator.registerLazySingleton(() => UserData());
+  locator.registerLazySingleton(() => WishListModel());
 
 
 }

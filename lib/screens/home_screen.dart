@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sharekny_app/models/user_model.dart';
+import 'package:sharekny_app/models/wishlist_model.dart';
 import 'package:sharekny_app/providers/categories_provider.dart';
 import 'package:sharekny_app/providers/products_provider.dart';
 import 'package:sharekny_app/screens/product_screen.dart';
@@ -42,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    locator<WishListModel>().getLocalWishlist();
     super.initState();
   }
 

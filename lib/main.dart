@@ -14,6 +14,7 @@ import 'package:sharekny_app/services/prefrence.dart';
 import 'package:sharekny_app/utilities/styles.dart';
 import './utilities/router.dart' as router;
 
+import 'models/wishlist_model.dart';
 import 'utilities/get_it.dart';
 
 void main() {
@@ -48,6 +49,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UserData>(
           create: (_) => locator<UserData>(),
         ),
+        ChangeNotifierProvider<WishListModel>(
+          create: (_) => locator<WishListModel>(),
+        ),
+
 
       ],
 

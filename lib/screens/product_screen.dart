@@ -40,7 +40,7 @@ class ProductScreen extends StatelessWidget {
               child: SizedBox(
                 height: 40,
                 child: Text(title!,
-                  style: AppTextStyle.mainTextStyle.copyWith(fontSize: 30),),
+                  style: AppTextStyle.mainTextStyle.copyWith(fontSize: 25),),
               ),
             ),
             Padding(

@@ -40,7 +40,7 @@ class AppTextStyle {
       canvasColor: whiteColor,
       scaffoldBackgroundColor: backgroundColor);
   static const mainTextStyle = TextStyle(
-       fontSize: 18, color: colorAccent);
+       fontSize: 18, color: blackColor);
   static const subTextStyle =
    TextStyle(fontWeight: FontWeight.w400, fontSize: 14, color: subTextColor);
 }

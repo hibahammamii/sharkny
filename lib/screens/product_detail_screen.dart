@@ -51,29 +51,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       child: Scaffold(
         appBar: Constants.appBar(context, "",
             iconColor: blackColor,
-            action:  Badge(
-                badgeContent: Consumer<CartProvider>(
-                  builder: (_, data, __) {
-                    return Text(
-                      data.itemCount.toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption!
-                          .apply(color: Colors.white),
-                    );
-                  },
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 5,right: 5),
-                  child: InkWell(
-                      onTap: () => locator<NavigationServices>()
-                          .navigateTo(CartScreen.routeName),
-                      child: const Icon(
-                        Icons.shopping_cart_outlined,
-                        color: logoColor,
-                      )),
-                ),
-                position: BadgePosition.topStart(top: 5,start: 0)
+            action:  InkWell(
+              onTap:  () => locator<NavigationServices>()
+                  .navigateTo(CartScreen.routeName),
+              child: Badge(
+                  badgeContent: Consumer<CartProvider>(
+                    builder: (_, data, __) {
+                      return Text(
+                        data.itemCount.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption!
+                            .apply(color: Colors.white),
+                      );
+                    },
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 5,right: 5),
+                    child: Icon(
+                      Icons.shopping_cart_outlined,
+                      color: logoColor,
+                    ),
+                  ),
+                  position: BadgePosition.topStart(top: 5,start: 0)
+              ),
             ),
         ) as PreferredSizeWidget?,
         body: SingleChildScrollView(
@@ -125,7 +126,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${widget.loadedProduct!.price} L.E',
+                      ' L.E ${widget.loadedProduct!.price} ',
                       style: const TextStyle(
                         color: colorAccent,
                         fontSize: 16,
@@ -142,23 +143,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               const SizedBox(
                 height: 10,
               ),
-              const Divider(
-                thickness: 2,
-              ),
-              const SizedBox(
-                height: 7,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Text(
-                  'Reviews',
-                  style: TextStyle(
-                    color: colorAccent,
-                    fontSize: 16,
-                  ),
-                  textAlign: TextAlign.end,
-                ),
-              ),
+              // const Divider(
+              //   thickness: 2,
+              // ),
+              // const SizedBox(
+              //   height: 7,
+              // ),
+              // const Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 30),
+              //   child: Text(
+              //     'Reviews',
+              //     style: TextStyle(
+              //       color: colorAccent,
+              //       fontSize: 16,
+              //     ),
+              //     textAlign: TextAlign.end,
+              //   ),
+              // ),
               const SizedBox(
                 height: 7,
               ),

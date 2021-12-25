@@ -19,14 +19,12 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
-    Product loadedProduct;
+
     return GestureDetector(
       onTap: () async{
-        loadedProduct =
-              (await locator<ProductsProvider>().findById(product.id!))!;
-        print(product.id);
+
         locator<NavigationServices>()
-            .navigateToWithArg(ProductDetailScreen.routeName, loadedProduct);
+            .navigateToWithArg(ProductDetailScreen.routeName, product);
       },
       child: SingleChildScrollView(
         child: Container(

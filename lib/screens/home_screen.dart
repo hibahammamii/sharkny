@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:provider/provider.dart';
 import 'package:sharekny_app/models/user_model.dart';
 import 'package:sharekny_app/models/wishlist_model.dart';
@@ -29,11 +31,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var _isInit = true;
-  var _isLoading = false;
+
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  new GlobalKey<RefreshIndicatorState>();
-  TextEditingController search = new TextEditingController();
+  GlobalKey<RefreshIndicatorState>();
+  TextEditingController search = TextEditingController();
   @override
   void dispose() {
     search.dispose();
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     locator<ProductsProvider>().getProductsNewArrival();
     locator<ProductsProvider>().getProductsTopSales();
-
+    locator<ProductsProvider>().getSliderImage();
 
 
     super.didChangeDependencies();
@@ -80,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
     onRefresh: () async {
      await locator<ProductsProvider>().getProductsNewArrival();
       await locator<ProductsProvider>().getProductsTopSales();
+     await locator<ProductsProvider>().getSliderImage();
     },
           child: SingleChildScrollView(
             child: Container(
@@ -88,6 +90,61 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: SizedBox(
+                        height: height * 0.30,
+                        width: double.infinity,
+                        child:
+                          Consumer<ProductsProvider>(builder: (_,data,__)
+                          {
+                            if (data.loadingProducts == true) {
+                              return Container(
+                                color: Colors.white,
+                                child: Center(
+                                  child: Constants.loadingElement(),
+                                ),
+                              );
+                            }
+                            return data.sliderImage.isNotEmpty
+                                ? SizedBox(
+                                width: 120,
+                                height: 110,
+                              child:Swiper(
+                                itemCount: data.sliderImage.length,
+                              autoplay: true,
+                              itemBuilder: (BuildContext context, int index) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(6),
+                                  child: CachedNetworkImage(
+                                    imageUrl: data.sliderImage[index],
+                                    width: 120,
+                                    height: 110,
+                                    placeholder: (context, url) => const CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(colorAccent),
+                                      strokeWidth: 2,
+                                    ),
+                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                    fit: BoxFit.cover,
+
+                                  ),
+                                );
+
+                              }
+
+                              )):
+                                Container();
+
+
+                          })
+
+
+                        )),
                   // const SizedBox(
                   //   height: 30,
                   // ),

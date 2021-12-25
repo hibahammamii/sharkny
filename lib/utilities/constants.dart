@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sharekny_app/providers/cart_provider.dart';
+import 'package:sharekny_app/providers/search_model.dart';
 import 'package:sharekny_app/screens/cart_screen.dart';
 import 'package:sharekny_app/screens/search_screen.dart';
 import 'package:sharekny_app/services/localization/app_localization.dart';
@@ -290,30 +291,33 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               Row(
                 children: [
-                  Badge(
-                      badgeContent: Consumer<CartProvider>(
-                        builder: (_, data, __) {
-                          return Text(
-                            data.itemCount.toString(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .caption!
-                                .apply(color: Colors.white),
-                          );
-                        },
-                      ),
-                      child: InkWell(
-                          onTap: () => locator<NavigationServices>()
-                              .navigateTo(CartScreen.routeName),
-                          child: const Icon(
-                            Icons.shopping_cart_outlined,
-                            color: logoColor,
-                          )),
-                      position: BadgePosition.topStart(start: -9, top: -13)
+                  InkWell(
+                    onTap:  () => locator<NavigationServices>()
+        .navigateTo(CartScreen.routeName),
+                    child: Badge(
+                        badgeContent: Consumer<CartProvider>(
+                          builder: (_, data, __) {
+                            return Text(
+                              data.itemCount.toString(),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .caption!
+                                  .apply(color: Colors.white),
+                            );
+                          },
+                        ),
+                        child: const Icon(
+                          Icons.shopping_cart_outlined,
+                          color: logoColor,
+                        ),
+                        position: BadgePosition.topStart(start: -9, top: -13)
+                    ),
                   ),
                   IconButton(
-                      onPressed: () => locator<NavigationServices>()
-                          .navigateTo(SearchScreen.routeName),
+                      onPressed: () {
+                        locator<SearchModel>().clearData();
+                        locator<NavigationServices>()
+                          .navigateTo(SearchScreen.routeName);},
                       icon: const Icon(
                         Icons.search,
                         color: logoColor,

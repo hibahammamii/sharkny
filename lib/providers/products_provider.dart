@@ -17,6 +17,8 @@ class ProductsProvider extends ChangeNotifier {
   List<Product> items = [];
   List<Product> topSales = [];
   List<Product> newArrival = [];
+  List<dynamic> sliderImage=[];
+
 
   Future<Product?>? findById(int id) async {
     try {
@@ -69,7 +71,27 @@ class ProductsProvider extends ChangeNotifier {
     loadingProducts = false;
     notifyListeners();
   }
+getSliderImage() async{
+    try
+    {
+      loadingProducts = true;
+      var response = await Api.instance.apiRequest(
+          RequestType.Get, Uri.parse("${Constants.baseUrl}/api/sliders"));
+      if (response != null) {
+        sliderImage = response;
+        loadingProducts = false;
+        notifyListeners();
+        print("fffffffff");
+        print(sliderImage);
+      }
+    } catch (e) {
+      print(e);
+      //rethrow;
+    }
 
+    loadingProducts = false;
+    notifyListeners();
+}
   getProductsTopSales() async {
     try {
       loadingProducts = true;

@@ -1,9 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:search_widget/search_widget.dart';
+import 'package:sharekny_app/providers/search_model.dart';
+import 'package:sharekny_app/services/localization/app_localization.dart';
 import 'package:sharekny_app/utilities/constants.dart';
+import 'package:sharekny_app/utilities/get_it.dart';
 import 'package:sharekny_app/utilities/styles.dart';
+import 'package:sharekny_app/widgets/product_item.dart';
 import 'package:sharekny_app/widgets/search_bar.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -13,75 +18,126 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List<LeaderBoard> list = <LeaderBoard>[
-    LeaderBoard("ساعه", 54),
+  final TextEditingController textEditingController = TextEditingController();
+  String? searchWord="";
+  void onSubmit(){
+    locator<SearchModel>().searchProducts(name: textEditingController.text);
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
 
-  ];
-
-  LeaderBoard? _selectedItem;
-
-  bool _show = true;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: Constants.appBar(context, "search") as PreferredSizeWidget?,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Column(
-          children: <Widget>[
-            if (_show)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: SearchWidget<LeaderBoard>(
-                  dataList: list,
-                  hideSearchBoxWhenItemSelected: false,
-                  listContainerHeight: MediaQuery.of(context).size.height / 4,
-                  queryBuilder: (query, list) {
-                    return list
-                        .where((item) => item.username
-                            .toLowerCase()
-                            .contains(query.toLowerCase()))
-                        .toList();
-                  },
-                  popupListItemBuilder: (item) {
-                    return PopupListItemWidget(item);
-                  },
-                  selectedItemBuilder: (selectedItem, deleteSelectedItem) {
-                    print("ssssssssssss");
-                    return Text("");
-                  },
-                  noItemsFoundWidget: NoItemsFound(),
-                  textFieldBuilder: (controller, focusNode) {
-                    return  Card(
-                        child:SearchBar(
-                        textController: controller,
-                        onTap: () {},
-                    onComplete: () {},
-                    ),
 
-                        shadowColor: lightGrey,
-                        elevation: 20,
-                        color: Colors.white);
-                  },
-                  onItemSelected: (item) {
-                    setState(() {
-                      _selectedItem = item;
-                    });
-                  },
-                ),
+    double height = MediaQuery.of(context).size.height;
+    return GestureDetector(
+      onTap: () {
+
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: Constants.appBar(context, "search") as PreferredSizeWidget?,
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Column(
+            children: <Widget>[
+
+              Card(
+                          child:Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                            height: 52,
+                            decoration: BoxDecoration(
+                                color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                            child: TextFormField(
+                              cursorColor: colorAccent,
+                              enabled: true,
+                              onSaved: (val) {
+                                searchWord = val;
+                              },
+                              keyboardType: TextInputType.text,
+                              cursorWidth: 1,
+                              autofocus: false,
+                              controller: textEditingController,
+                              onEditingComplete: onSubmit,
+
+                              style: const TextStyle(
+                                  color: blackColor, fontWeight: FontWeight.w600, fontSize: 16),
+                              decoration: InputDecoration(
+                                icon: const Icon(
+                                  Icons.search,
+                                  color: colorAccent,
+                                ),
+                                // ignore: unnecessary_null_comparison
+
+                                hintText: AppLocalizations.of(context)!.translate("search"),
+                                hintStyle: const TextStyle(
+                                  color: blackColor,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
+
+                          shadowColor: lightGrey,
+                          elevation: 20,
+                          color: Colors.white),
+              const SizedBox(
+                height: 32,
               ),
-            const SizedBox(
-              height: 32,
-            ),
-            Text(
-              "${_selectedItem != null ? "" : "No item selected"}",
-            ),
-          ],
-        ),
-      ),
+              Consumer<SearchModel>(builder: ( _,data,__)
+              {
+                if (data.loadingProducts == true) {
+                  return Container(
+
+                    color: Colors.white,
+                    child: Center(
+                      child: Constants.loadingElement(),
+                    ),
+                  );
+                }
+
+                return data.products.isNotEmpty
+                    ? SizedBox(
+                  height: height,
+
+                  child:
+                  ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: data.products.length,
+                    itemBuilder: (ctx, i) =>
+                        ChangeNotifierProvider.value(
+                          // builder: (c) => products[i],
+                          value: data.products[i],
+                          child: ProductItem(
+                            // products[i].id,
+                            // products[i].title,
+                            // products[i].imageUrl,
+                          ),
+                        ),
+                  ),
+                )
+                    :
+                Container(child:  const Text(
+                  " No item selected",
+                ),);
+              },),
+
+
+                    ],
+                  ),
+                ),
+
+
+
+          ),
     );
+
   }
 }
 

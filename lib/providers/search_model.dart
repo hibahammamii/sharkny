@@ -132,20 +132,20 @@ class SearchModel extends ChangeNotifier {
   // }
 
   Future<List<Product>> searchProducts({
-    String? name,
+    String? name="",
     int? categoryID,
 
   }) async {
     try {
-      String endPoint =  "${Constants.baseUrl}/api/search?";
+      String endPoint =  "${Constants.baseUrl}/api/search?name=$name";
       if(categoryID != null)
         {
-          endPoint += "category_id=$categoryID";
+          endPoint += "&category_id=$categoryID";
         }
-      if(name != null)
-      {
-        endPoint += "name=$name";
-      }
+      // if(name != null)
+      // {
+      //   endPoint += "name=$name";
+      // }
        loadingProducts = true;
       var list = <Product>[];
       final data = await Api.instance.apiRequest(

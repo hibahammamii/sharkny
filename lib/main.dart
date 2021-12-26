@@ -15,6 +15,7 @@ import 'package:sharekny_app/services/prefrence.dart';
 import 'package:sharekny_app/utilities/styles.dart';
 import './utilities/router.dart' as router;
 
+import 'models/cart_model.dart';
 import 'models/wishlist_model.dart';
 import 'utilities/get_it.dart';
 
@@ -55,6 +56,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<SearchModel>(
           create: (_) => locator<SearchModel>(),
+        ),
+
+        ChangeNotifierProvider<CartItem>(
+          create: (_) => locator<CartItem>(),
         ),
 
 

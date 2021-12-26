@@ -18,6 +18,7 @@ class Product with ChangeNotifier{
   String? image;
   int? quantity;
 
+
   Product(this.id,this.userId,this.categoryId,this.title,this.price,this.storePrice,this.earn,this.desc,this.status,this.active,this.adminNotes,this.createdAt,this.updatedAt);
 
   Product.fromJson(dynamic json)
@@ -64,4 +65,5 @@ class Product with ChangeNotifier{
     data["qty"] = quantity;
     return data;
   }
+
 }

@@ -1,8 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:provider/provider.dart';
 import 'package:search_widget/search_widget.dart';
+import 'package:sharekny_app/models/category_model.dart';
+import 'package:sharekny_app/providers/categories_provider.dart';
 import 'package:sharekny_app/providers/search_model.dart';
 import 'package:sharekny_app/services/localization/app_localization.dart';
 import 'package:sharekny_app/utilities/constants.dart';
@@ -20,17 +23,24 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController textEditingController = TextEditingController();
   String? searchWord="";
+  bool dropDown = false;
+  String? _dropDownValue ;
+  CategoryModel? categoryModel;
+  List<CategoryModel> category = locator<CategoriesProvider>().items;
   void onSubmit(){
-    locator<SearchModel>().searchProducts(name: textEditingController.text);
-  }
-  @override
-  void initState() {
-    // TODO: implement initState
-
+    if(categoryModel != null)
+      {
+        locator<SearchModel>().searchProducts(name: textEditingController.text,categoryID: categoryModel!.id);
+      }
+    else {
+      locator<SearchModel>().searchProducts(name: textEditingController.text,);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+
 
     double height = MediaQuery.of(context).size.height;
     return GestureDetector(
@@ -42,51 +52,157 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: Colors.white,
         appBar: Constants.appBar(context, "search") as PreferredSizeWidget?,
         body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 6),
           child: Column(
+
             children: <Widget>[
 
-              Card(
-                          child:Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                            height: 52,
-                            decoration: BoxDecoration(
-                                color: Colors.white, borderRadius: BorderRadius.circular(10)),
-                            child: TextFormField(
-                              cursorColor: colorAccent,
-                              enabled: true,
-                              onSaved: (val) {
-                                searchWord = val;
-                              },
-                              keyboardType: TextInputType.text,
-                              cursorWidth: 1,
-                              autofocus: false,
-                              controller: textEditingController,
-                              onEditingComplete: onSubmit,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    children: [
+                      Card(
+                                  child:Container(
+                                    width: width * 0.72,
+                                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                                    height: 52,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                                    child: TextFormField(
+                                      cursorColor: colorAccent,
+                                      enabled: true,
+                                      onSaved: (val) {
+                                        searchWord = val;
+                                      },
+                                      keyboardType: TextInputType.text,
+                                      cursorWidth: 1,
+                                      autofocus: false,
+                                      controller: textEditingController,
+                                      onEditingComplete: onSubmit,
 
-                              style: const TextStyle(
-                                  color: blackColor, fontWeight: FontWeight.w600, fontSize: 16),
-                              decoration: InputDecoration(
-                                icon: const Icon(
-                                  Icons.search,
-                                  color: colorAccent,
-                                ),
-                                // ignore: unnecessary_null_comparison
+                                      style: const TextStyle(
+                                          color: blackColor, fontWeight: FontWeight.w600, fontSize: 16),
+                                      decoration: InputDecoration(
+                                        icon: const Icon(
+                                          Icons.search,
+                                          color: blackColor,
+                                        ),
+                                        // ignore: unnecessary_null_comparison
 
-                                hintText: AppLocalizations.of(context)!.translate("search"),
-                                hintStyle: const TextStyle(
-                                  color: blackColor,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
+                                        hintText: AppLocalizations.of(context)!.translate("search"),
+                                        hintStyle: const TextStyle(
+                                          color: blackColor,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                        border: InputBorder.none,
+                                      ),
+                                    ),
+                                  ),
 
-                          shadowColor: lightGrey,
-                          elevation: 20,
-                          color: Colors.white),
+                                  shadowColor: lightGrey,
+                                  elevation: 20,
+                                  color: Colors.white),
+        Card(
+          child: Container(
+            height: 52,
+            width: width * 0.21,
+            child: DropdownButton(
+              hint:_dropDownValue == null
+                  ?   const Text('منقي',style: TextStyle(color: blackColor))
+                  : Text(
+                _dropDownValue!,
+                style: const TextStyle(color: blackColor),
+              ),
+
+
+              isExpanded: true,
+              iconSize: 30.0,
+              style: const TextStyle(color:blackColor),
+              items: category.map(
+                    (val) {
+                  return DropdownMenuItem<CategoryModel>(
+                    value: val,
+                    child: Text(val.title!),
+                  );
+                },
+              ).toList(),
+              onChanged: (CategoryModel? val) {
+                setState(
+                      () {
+                        categoryModel = val;
+                    _dropDownValue = val!.title!;
+
+                  },
+                );
+                locator<SearchModel>().searchProducts(name: textEditingController.text,categoryID: val!.id);
+              },
+            ),
+          ),
+            shadowColor: lightGrey,
+            elevation: 20,
+            color: Colors.white
+        )
+                      // Card(
+                      //     child:  InkWell(onTap: (){
+                      //       setState(() {
+                      //         dropDown = !dropDown;
+                      //       });
+                      //     },
+                      //
+                      //     child: Container(
+                      //       padding: const EdgeInsets.symmetric(horizontal: 3,vertical: 3),
+                      //
+                      //       width: width*0.18,
+                      //
+                      //       child: Container(
+                      //         height: 52,
+                      //         child: Row(
+                      //           children: [
+                      //             const Text("منقي"),
+                      //             Icon( dropDown?
+                      //             Icons.expand_less:
+                      //                 Icons.expand_more
+                      //
+                      //             ),
+                      //
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     )
+                      // ),
+                      //
+                      //     shadowColor: lightGrey,
+                      //     elevation: 20,
+                      //     color: Colors.white
+                      // )
+                    ],
+                  ),
+                  // if(dropDown)
+                  //   Card(
+                  //     child: Container(
+                  //       width: width*0.18,
+                  //       height: 100,
+                  //
+                  //       child:ListView.builder(
+                  //         scrollDirection: Axis.vertical,
+                  //         itemCount: category.length,
+                  //         itemBuilder: (ctx, i) =>
+                  //             ChangeNotifierProvider.value(
+                  //               // builder: (c) => products[i],
+                  //               value: category[i],
+                  //               child: Text(category[i].title!),
+                  //             ),
+                  //       ),
+                  //     ),
+                  //       elevation: 20,
+                  //       color: Colors.white
+                  //
+                  //   )
+                ],
+              ),
+
               const SizedBox(
                 height: 32,
               ),

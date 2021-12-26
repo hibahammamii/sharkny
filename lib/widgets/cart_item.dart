@@ -126,6 +126,8 @@ class _CartItemState extends State<CartItem> {
                                InkWell(
                                 onTap: (){
                                   if (widget.quantity <4) ++widget.quantity;
+                                  locator<CartProvider>().changeQty(widget.productId, widget.quantity);
+
                                   setState(() {
 
                                   });
@@ -165,6 +167,7 @@ class _CartItemState extends State<CartItem> {
                                InkWell(
                                 onTap:  (){
                                   if (widget.quantity >1) --widget.quantity;
+                                  locator<CartProvider>().changeQty(widget.productId, widget.quantity);
                                   setState(() {
 
                                   });

@@ -1,8 +1,10 @@
 
-class CartItem {
+import 'package:flutter/cupertino.dart';
+
+class CartItem with ChangeNotifier{
   final String id;
   final String title;
-  final int quantity;
+   int? quantity;
   final double price;
   final String? urlImage;
   int? itemID; // this for cart also
@@ -10,7 +12,7 @@ class CartItem {
   String? name;
   int? attributeSetId;
   int? status;
-  int? qty; // not in all
+  int? qty=1; // not in all
   int? visibility;
   String? typeId;
   String? createdAt;
@@ -24,4 +26,11 @@ class CartItem {
      this.urlImage,
     this.status,this.name,this.updatedAt,this.typeId
   });
+  set itemQty(int qty)
+  {
+    this.qty=quantity;
+    notifyListeners();
+  }
+ int? getItemQty()  { return quantity;}
+
 }

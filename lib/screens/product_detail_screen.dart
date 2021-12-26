@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:sharekny_app/models/cart_model.dart';
 import 'package:sharekny_app/models/product_model.dart';
 import 'package:sharekny_app/providers/cart_provider.dart';
 import 'package:sharekny_app/providers/products_provider.dart';
@@ -273,6 +274,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               InkWell(
                                 onTap: () {
                                   if (quantity > 1) --quantity;
+
                                   setState(() {});
                                 },
                                 child: const Padding(

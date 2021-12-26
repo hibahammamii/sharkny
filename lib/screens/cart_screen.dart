@@ -57,7 +57,7 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                     SizedBox(
-                      height: height*0.38,
+                      height: height*0.5,
                       child: CustomScrollView(
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
@@ -71,7 +71,7 @@ class _CartScreenState extends State<CartScreen> {
                                   cart.items.values.toList()[i].id,
                                   cart.items.keys.toList()[i],
                                   cart.items.values.toList()[i].price,
-                                  cart.items.values.toList()[i].quantity,
+                                  cart.items.values.toList()[i].quantity!,
                                   cart.items.values.toList()[i].title,
                                   cart.items.values.toList()[i].urlImage),
                             ),
@@ -93,27 +93,33 @@ class _CartScreenState extends State<CartScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "${AppLocalizations.of(context)!.translate("subtotal")} :",
-                            style: AppTextStyle.subTextStyle.copyWith(
-                                fontSize: 16, fontWeight: FontWeight.w400),
+                          Row(
+                            children: [
+                              Text(
+                                "${AppLocalizations.of(context)!.translate("subtotal")} :",
+                                style: AppTextStyle.subTextStyle.copyWith(
+                                    fontSize: 16, fontWeight: FontWeight.w400),
+                              ),
+                              Text("${data.totalAmount.toString()}  L.E"),
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          Text(
-                            "${AppLocalizations.of(context)!.translate("discount")} :",
-                            style: AppTextStyle.subTextStyle.copyWith(
-                                fontSize: 16, fontWeight: FontWeight.w400),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            "${AppLocalizations.of(context)!.translate("shipping_fees")} :",
-                            style: AppTextStyle.subTextStyle.copyWith(
-                                fontSize: 16, fontWeight: FontWeight.w400),
-                          ),
+                          // Text(
+                          //   "${AppLocalizations.of(context)!.translate("discount")} :",
+                          //   style: AppTextStyle.subTextStyle.copyWith(
+                          //       fontSize: 16, fontWeight: FontWeight.w400),
+                          // ),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
+                          // Text(
+                          //   "${AppLocalizations.of(context)!.translate("shipping_fees")} :",
+                          //   style: AppTextStyle.subTextStyle.copyWith(
+                          //       fontSize: 16, fontWeight: FontWeight.w400),
+                          // ),
                         ],
                       ),
                     ),
@@ -121,14 +127,14 @@ class _CartScreenState extends State<CartScreen> {
                       thickness: 1,
                       color: lightGrey,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
+                    const Padding(
+                      padding: EdgeInsets.symmetric(
                           horizontal: 20),
-                      child: Text(
-                        "${AppLocalizations.of(context)!.translate("total")} :",
-                        style: AppTextStyle.mainTextStyle
-                            .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
-                      ),
+                      // child: Text(
+                      //   "${AppLocalizations.of(context)!.translate("total")} :",
+                      //   style: AppTextStyle.mainTextStyle
+                      //       .copyWith(fontSize: 16, fontWeight: FontWeight.w400),
+                      // ),
                     ),
                   const SizedBox(height: 10,),
                     Align(

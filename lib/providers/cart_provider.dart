@@ -10,10 +10,13 @@ class CartProvider extends ChangeNotifier {
   bool totalLoading = false;
   bool coupanLoading = false;
   bool deleteLoading = false;
+  final Map<String, int> productsInCart = {};
 
   //List<Product> items = [];
   List<Product> itemDetails = [];
   Map<String, CartItem> _items = {};
+  int get totalCartQuantity =>
+      productsInCart.values.fold(0, (v, e) => v + e);
 
   Map<String, CartItem> get items {
     return {..._items};
@@ -22,14 +25,30 @@ class CartProvider extends ChangeNotifier {
   int get itemCount {
     return _items.length;
   }
+  double getProductPrice(id) {
+    double total = 0;
+   total = productsInCart[id]!  * _items[id]!.price;
+   return total;
+
+}
+
+
 
   double get totalAmount {
     var total = 0.0;
     _items.forEach((key, cartItem) {
-      total += cartItem.price * cartItem.quantity;
+      total += cartItem.price * cartItem.quantity!;
     });
     return total;
+
   }
+  changeQty(id,qty)
+  {
+    _items[id]!.quantity = qty;
+    notifyListeners();
+
+  }
+
 
   void addItem(
       int productId,
@@ -38,7 +57,7 @@ class CartProvider extends ChangeNotifier {
       String? urlImage,
       int quantity
       ) {
-    if (_items.containsKey(productId)) {
+    if (_items.containsKey(productId.toString())) {
       // change quantity...
       _items.update(
         productId.toString(),
@@ -46,7 +65,7 @@ class CartProvider extends ChangeNotifier {
           id: existingCartItem.id,
           title: existingCartItem.title,
           price: existingCartItem.price,
-          quantity: existingCartItem.quantity+quantity,
+          quantity: existingCartItem.quantity!+quantity,
           urlImage: existingCartItem.urlImage
         ),
       );
@@ -74,7 +93,7 @@ class CartProvider extends ChangeNotifier {
     if (!_items.containsKey(productId)) {
       return;
     }
-    if (_items[productId]!.quantity > 1) {
+    if (_items[productId]!.quantity! > 1) {
       _items.update(
           productId.toString(),
               (existingCartItem) => CartItem(
@@ -82,7 +101,7 @@ class CartProvider extends ChangeNotifier {
             title: existingCartItem.title,
             price: existingCartItem.price,
             urlImage: existingCartItem.urlImage,
-            quantity: existingCartItem.quantity - 1,
+            quantity: existingCartItem.quantity!- 1,
           ));
     } else {
       _items.remove(productId);

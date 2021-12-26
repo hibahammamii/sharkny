@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sharekny_app/models/product_model.dart';
@@ -82,13 +83,13 @@ class ProductItem extends StatelessWidget {
                         child: Row(
                           children: [
                             Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(25)),
-                                  color: dangerColor.withOpacity(0.5)),
+                              // decoration: BoxDecoration(
+                              //     borderRadius: const BorderRadius.all(
+                              //         Radius.circular(25)),
+                              //     color: dangerColor.withOpacity(0.5)),
                               child: Text(product.earn.toString(),
                                   style: AppTextStyle.subTextStyle
-                                      .copyWith(fontSize: 10)),
+                                      .copyWith(fontSize: 12,fontWeight: FontWeight.bold)),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 3, right: 3),
@@ -99,13 +100,13 @@ class ProductItem extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(25)),
-                                  color: colorAccent.withOpacity(0.2)),
+                              // decoration: BoxDecoration(
+                              //     borderRadius: const BorderRadius.all(
+                              //         Radius.circular(25)),
+                              //     color: colorAccent.withOpacity(0.2)),
                               child: Text(product.price.toString(),
                                   style: AppTextStyle.subTextStyle
-                                      .copyWith(fontSize: 10)),
+                                      .copyWith(fontSize: 12,fontWeight: FontWeight.bold)),
                             ),
                           ],
                         ),

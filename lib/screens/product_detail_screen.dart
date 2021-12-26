@@ -126,12 +126,47 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      ' L.E ${widget.loadedProduct!.price} ',
-                      style: const TextStyle(
-                        color: colorAccent,
-                        fontSize: 16,
-                      ),
+                    Column(
+
+                      children: [
+                        Text(
+                          "${AppLocalizations.of(context)!.translate("gain")} :",
+                          style: AppTextStyle.subTextStyle
+                              .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                        ),
+
+                        Row(
+                          children: [
+                            Text(
+                              ' L.E ${widget.loadedProduct!.earn} ',
+                              style: const TextStyle(
+                                color: colorAccent,
+                                fontSize: 16,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 3, right: 3),
+                              child: Text(
+                                "${AppLocalizations.of(context)!.translate("from")}",
+                                style: AppTextStyle.subTextStyle.copyWith(
+                                    fontSize: 12, fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                            Container(
+                              // decoration: BoxDecoration(
+                              //     borderRadius: const BorderRadius.all(
+                              //         Radius.circular(25)),
+                              //     color: colorAccent.withOpacity(0.2)),
+                              child: Text( ' L.E ${widget.loadedProduct!.price} ',
+                                style: const TextStyle(
+                                  color: colorAccent,
+                                  fontSize: 16,
+                                ),),
+                            ),
+                          ],
+                        ),
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.start,
                     ),
                     HeartButton(
                       product: widget.loadedProduct,

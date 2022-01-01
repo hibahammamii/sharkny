@@ -19,6 +19,8 @@ class Product with ChangeNotifier{
   int? quantity;
 
 
+
+
   Product(this.id,this.userId,this.categoryId,this.title,this.price,this.storePrice,this.earn,this.desc,this.status,this.active,this.adminNotes,this.createdAt,this.updatedAt);
 
   Product.fromJson(dynamic json)

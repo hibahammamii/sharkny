@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:sharekny_app/models/user_model.dart';
 import 'package:sharekny_app/models/wishlist_model.dart';
 import 'package:sharekny_app/providers/categories_provider.dart';
+import 'package:sharekny_app/providers/pay_outs_provider.dart';
 import 'package:sharekny_app/providers/products_provider.dart';
 import 'package:sharekny_app/screens/product_screen.dart';
 import 'package:sharekny_app/screens/search_screen.dart';
@@ -44,16 +45,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    locator<WishListModel>().getLocalWishlist();
+    locator<UserData>().getUser();
+    locator<WishListModel>().WishListOnline();
     super.initState();
+
   }
+
 
   @override
   void didChangeDependencies() {
     // Provider.of<Categories>(context).fetchAndSetProducts().then((_){});
 
     locator<CategoriesProvider>().getCategories();
-
     locator<ProductsProvider>().getProductsNewArrival();
     locator<ProductsProvider>().getProductsTopSales();
     locator<ProductsProvider>().getSliderImage();

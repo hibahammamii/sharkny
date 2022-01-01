@@ -81,8 +81,7 @@ getSliderImage() async{
         sliderImage = response;
         loadingProducts = false;
         notifyListeners();
-        print("fffffffff");
-        print(sliderImage);
+
       }
     } catch (e) {
       print(e);

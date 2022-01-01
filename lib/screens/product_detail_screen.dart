@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sharekny_app/models/cart_model.dart';
 import 'package:sharekny_app/models/product_model.dart';
+import 'package:sharekny_app/models/wishlist_model.dart';
 import 'package:sharekny_app/providers/cart_provider.dart';
 import 'package:sharekny_app/providers/products_provider.dart';
 import 'package:sharekny_app/services/localization/app_localization.dart';
@@ -32,7 +33,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int quantity = 1;
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -168,10 +168,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ],
                       mainAxisAlignment: MainAxisAlignment.start,
                     ),
-                    HeartButton(
-                      product: widget.loadedProduct,
-                      size: 18.0,
-                      color: lightGrey,),
+                    Consumer<WishListModel>(
+                      builder: (_,data,__){
+                        return
+                          HeartButton(
+                            product: widget.loadedProduct,
+                            size: 18.0,
+                            color: lightGrey,
+                            context: context,);
+
+                      },
+                    ),
 
                   ],
                 ),

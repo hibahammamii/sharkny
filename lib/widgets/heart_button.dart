@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sharekny_app/models/user_model.dart';
+import 'package:sharekny_app/utilities/get_it.dart';
+import 'package:sharekny_app/utilities/styles.dart';
 
 import '../models/product_model.dart' show Product;
 import '../models/wishlist_model.dart' show WishListModel;
-
 
 class HeartButton extends StatefulWidget {
   final Product? product;
   final double? size;
   final Color? color;
+  BuildContext context;
 
-  HeartButton({this.product, this.size, this.color});
+  HeartButton({Key? key, this.product, this.size, this.color,required this.context}) : super(key: key);
 
   @override
   _HeartButtonState createState() => _HeartButtonState();
@@ -19,17 +23,47 @@ class HeartButton extends StatefulWidget {
 
 class _HeartButtonState extends State<HeartButton> {
   @override
-  Widget build(BuildContext context) {
-    List<Product?> wishlist = Provider.of<WishListModel>(context).getWishList();
-    final isExist = wishlist.firstWhere((item) => item!.id == widget.product!.id,
+  Widget build(context) {
+
+    List<int?> WishListOnline = Provider.of<WishListModel>(context).getWishListOnline();
+    final isExist = WishListOnline.firstWhere(
+            (item) => item == widget.product!.id,
         orElse: () => null);
+    print(WishListOnline);
+    // List<Product?> wishlist = Provider.of<WishListModel>(context).getWishList();
+    // final isExist = wishlist.firstWhere(
+    //     (item) => item!.id == widget.product!.id,
+    //     orElse: () => null);
 
     if (isExist == null) {
       return IconButton(
-        onPressed: () {
-          Provider.of<WishListModel>(context, listen: false)
-              .addToWishlist(widget.product);
-          setState(() {});
+        onPressed: () async {
+          await locator<UserData>().getUser();
+
+          bool? loggedIn = locator<UserData>().loggedIn?? false;
+          if (!loggedIn) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                duration: const Duration(milliseconds: 800),
+                backgroundColor: dangerColor,
+                content: const Text(
+                  "يرجى تسجيل الدخول",
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            );
+          } else {
+          await  Provider.of<WishListModel>(context, listen: false).addToWishlist(
+                widget.product, locator<UserData>().currentUser!.id);
+        await Provider.of<WishListModel>(context, listen: false).WishListOnline();
+            setState(() {});
+          }
         },
         icon: CircleAvatar(
           backgroundColor: Colors.white.withOpacity(0.3),
@@ -41,10 +75,33 @@ class _HeartButtonState extends State<HeartButton> {
     }
 
     return IconButton(
-      onPressed: () {
-        Provider.of<WishListModel>(context, listen: false)
-            .removeToWishlist(widget.product);
-        setState(() {});
+      onPressed: () async {
+        await locator<UserData>().getUser();
+
+        bool? loggedIn = locator<UserData>().loggedIn?? false;
+        if (!loggedIn) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: const Duration(milliseconds: 800),
+              backgroundColor: dangerColor,
+              content: const Text(
+                "يرجى تسجيل الدخول",
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          );
+        } else {
+        await  Provider.of<WishListModel>(context, listen: false)
+              .removeToWishlist(widget.product,locator<UserData>().currentUser!.id);
+        await Provider.of<WishListModel>(context, listen: false).WishListOnline();
+          setState(() {});
+        }
       },
       icon: CircleAvatar(
         backgroundColor: Colors.pink.withOpacity(0.1),

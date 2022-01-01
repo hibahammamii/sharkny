@@ -5,6 +5,7 @@ import 'package:sharekny_app/models/user_model.dart';
 import 'package:sharekny_app/providers/auth_provider.dart';
 import 'package:sharekny_app/providers/cart_provider.dart';
 import 'package:sharekny_app/providers/categories_provider.dart';
+import 'package:sharekny_app/providers/pay_outs_provider.dart';
 import 'package:sharekny_app/providers/products_provider.dart';
 import 'package:sharekny_app/providers/search_model.dart';
 import 'package:sharekny_app/screens/home_screen.dart';
@@ -61,6 +62,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<CartItem>(
           create: (_) => locator<CartItem>(),
         ),
+        ChangeNotifierProvider<PayOutsProvider>(
+          create: (_) => locator<PayOutsProvider>(),
+        ),
+
 
 
 
@@ -72,8 +77,9 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               locator<LocalizationProvider>().setLocal(snapshot.data);
             } else {
-              locator<LocalizationProvider>().setLocal('en');
+              locator<LocalizationProvider>().setLocal('ar');
             }
+            locator<UserData>().getUser();
             return Consumer<LocalizationProvider>(builder: (context, _, __) {
               return MaterialApp(
                 theme:

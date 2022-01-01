@@ -84,6 +84,8 @@ class UserData with ChangeNotifier {
   }
   User? get currentUser => _currentUser;
   Future<void> saveUser(User user) async {
+
+
     final LocalStorage storage = LocalStorage("sarekny");
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();

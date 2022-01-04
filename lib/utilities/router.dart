@@ -7,6 +7,7 @@ import 'package:sharekny_app/screens/cart_screen.dart';
 import 'package:sharekny_app/screens/home_screen.dart';
 import 'package:sharekny_app/screens/log_in_screen.dart';
 import 'package:sharekny_app/screens/my_profile_page.dart';
+import 'package:sharekny_app/screens/orders_screen.dart';
 import 'package:sharekny_app/screens/pay_out_screen.dart';
 import 'package:sharekny_app/screens/product_detail_screen.dart';
 import 'package:sharekny_app/screens/product_screen.dart';
@@ -39,6 +40,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) =>  PayOutsScreen());
     case MyProfile.routeName:
       return MaterialPageRoute(builder: (context) =>  MyProfile());
+    case OrdersScreen.routeName:
+      return MaterialPageRoute(builder: (context) =>  OrdersScreen());
     case ProductDetailScreen.routeName:
       return MaterialPageRoute(
           builder: (context) => ProductDetailScreen(

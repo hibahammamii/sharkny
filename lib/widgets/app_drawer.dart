@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sharekny_app/models/user_model.dart';
+import 'package:sharekny_app/providers/orders_provider.dart';
 import 'package:sharekny_app/providers/pay_outs_provider.dart';
 import 'package:sharekny_app/screens/cart_screen.dart';
 import 'package:sharekny_app/screens/home_screen.dart';
 import 'package:sharekny_app/screens/log_in_screen.dart';
 import 'package:sharekny_app/screens/my_profile_page.dart';
+import 'package:sharekny_app/screens/orders_screen.dart';
 import 'package:sharekny_app/screens/pay_out_screen.dart';
 import 'package:sharekny_app/screens/welcome_screen.dart';
 import 'package:sharekny_app/services/localization/app_localization.dart';
@@ -70,7 +72,33 @@ class _AppDrawerState extends State<AppDrawer> {
               child: Text(AppLocalizations.of(context)!.translate('cart'),
                   style: AppTextStyle.subTextStyle.copyWith(fontSize: 20))),
           TextButton(
-              onPressed: null,
+              onPressed:() async{
+                if(locator<UserData>().currentUser!.id != null) {
+                  await locator<OrdersProvider>().fetchOrders(
+                      locator<UserData>().currentUser!.id);
+                  locator<NavigationServices>()
+                      .navigateTo(OrdersScreen.routeName);
+                }
+                else{
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      dismissDirection: DismissDirection.startToEnd,
+                      duration: const Duration(milliseconds: 800),
+                      backgroundColor: dangerColor,
+                      content: const Text(
+                        "يرجى تسجيل الدخول",
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              },
               child: Text(AppLocalizations.of(context)!.translate('orders'),
                   style: AppTextStyle.subTextStyle.copyWith(fontSize: 20))),
           TextButton(

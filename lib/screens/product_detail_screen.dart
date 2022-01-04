@@ -135,34 +135,66 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
                         ),
 
-                        Row(
+                        Column(
                           children: [
-                            Text(
-                              ' L.E ${widget.loadedProduct!.earn} ',
-                              style: const TextStyle(
-                                color: colorAccent,
-                                fontSize: 16,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  ' L.E ${widget.loadedProduct!.earn} ',
+                                  style: const TextStyle(
+                                    color: colorAccent,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 3, right: 3),
+                                  child: Text(
+                                    "${AppLocalizations.of(context)!.translate("from")}",
+                                    style: AppTextStyle.subTextStyle.copyWith(
+                                        fontSize: 12, fontWeight: FontWeight.w400),
+                                  ),
+                                ),
+                                Container(
+                                  // decoration: BoxDecoration(
+                                  //     borderRadius: const BorderRadius.all(
+                                  //         Radius.circular(25)),
+                                  //     color: colorAccent.withOpacity(0.2)),
+                                  child: Text( ' L.E ${widget.loadedProduct!.price} ',
+                                    style: const TextStyle(
+                                      color: colorAccent,
+                                      fontSize: 16,
+                                    ),),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 3, right: 3),
-                              child: Text(
-                                "${AppLocalizations.of(context)!.translate("from")}",
-                                style: AppTextStyle.subTextStyle.copyWith(
-                                    fontSize: 12, fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                            Container(
-                              // decoration: BoxDecoration(
-                              //     borderRadius: const BorderRadius.all(
-                              //         Radius.circular(25)),
-                              //     color: colorAccent.withOpacity(0.2)),
-                              child: Text( ' L.E ${widget.loadedProduct!.price} ',
-                                style: const TextStyle(
-                                  color: colorAccent,
-                                  fontSize: 16,
-                                ),),
-                            ),
+                            Row(
+                              children: [
+                                Text("البيع بسعر إختياري:",style: AppTextStyle.subTextStyle
+                                    .copyWith(fontSize: 12, fontWeight: FontWeight.w400)),
+                                Container(
+                                    margin: const EdgeInsets.symmetric(horizontal: 12,vertical: 8),
+                                    width: 70,
+                                    height: 40,
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(5),
+
+                                        border: Border.all(
+                                            color: lightGrey,
+                                            width: 2)),
+                                    child: TextFormField(
+
+
+                                      decoration: const InputDecoration(
+                                        border: InputBorder.none,
+                                      ),
+
+                                      keyboardType: TextInputType.number,
+
+                                    ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ],

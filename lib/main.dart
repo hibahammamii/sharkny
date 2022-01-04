@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:sharekny_app/models/order_model.dart';
 import 'package:sharekny_app/models/user_model.dart';
 import 'package:sharekny_app/providers/auth_provider.dart';
 import 'package:sharekny_app/providers/cart_provider.dart';
 import 'package:sharekny_app/providers/categories_provider.dart';
+import 'package:sharekny_app/providers/orders_provider.dart';
 import 'package:sharekny_app/providers/pay_outs_provider.dart';
 import 'package:sharekny_app/providers/products_provider.dart';
 import 'package:sharekny_app/providers/search_model.dart';
@@ -64,6 +66,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<PayOutsProvider>(
           create: (_) => locator<PayOutsProvider>(),
+        ),
+        ChangeNotifierProvider<OrdersProvider>(
+          create: (_) => locator<OrdersProvider>(),
         ),
 
 

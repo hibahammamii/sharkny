@@ -88,7 +88,7 @@ class _PayOutsScreenState extends State<PayOutsScreen> {
                                 border: Border.all(
                                     color: lightGrey,
                                     width: 2)),
-                            child: Center(child: Text(payOuts.balance.toString()))),
+                            child: Center(child: Text(payOuts.availablebalance.toString()))),
 
                       ],
                     ),
@@ -107,75 +107,11 @@ class _PayOutsScreenState extends State<PayOutsScreen> {
                                 border: Border.all(
                                     color: lightGrey,
                                     width: 2)),
-                            child: Center(child: Text(payOuts.balance.toString()))),
+                            child: Center(child: Text(payOuts.totalEarn.toString()))),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Stack(
-                          children: [
-                            Container(
-                                margin: const EdgeInsets.symmetric(vertical: 20),
-                                width: 150,
-                                height: 150,
-                                padding: const EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
 
-                                    border: Border.all(
-                                        color: lightGrey,
-                                        width: 2)),
-                                child: Center(child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("قيد الانتظار",
-                                        style: AppTextStyle.subTextStyle.copyWith(fontSize: 20)),
-                                    const SizedBox(height: 6,),
-                                    Text(payOuts.balance.toString()),
-                                  ],
-                                ))),
-                            const Positioned(
-                              left: 50,
-                                right: 50,
-                                top: 2,
-                                child: Icon(Icons.timelapse_rounded,color: orangeColor,size: 40,))
-                          ],
-                        ),
 
-                        Stack(
-                          children: [
-                            Container(
-                                margin: const EdgeInsets.symmetric(vertical: 20),
-                                width: 150,
-                                height: 150,
-                                padding: const EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-
-                                    border: Border.all(
-                                        color: lightGrey,
-                                        width: 2)),
-                                child: Center(child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("طلبات معطله",
-                                        style: AppTextStyle.subTextStyle.copyWith(fontSize: 20)),
-                                    const SizedBox(height: 6,),
-                                    Text(payOuts.balance.toString()),
-                                  ],
-                                ))),
-                            const Positioned(
-                                left: 50,
-                                right: 50,
-                                top: 2,
-                                child: Icon(Icons.block,color: redColor,size: 40,))
-                          ],
-                        ),
-                      ],
-                    ),
                     // Row(
                     //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     //   children: [
@@ -308,6 +244,31 @@ class _PayOutsScreenState extends State<PayOutsScreen> {
                     //     ),
                     //   ],
                     // ),
+                    Container(
+                      height: 500,
+                      width: 500,
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: payOuts.listPayOuts!.length,
+                        itemBuilder: (context, i){
+
+                          return Card(
+                            child: ListTile(
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text("الرصيد: "),
+                                  Text(payOuts.listPayOuts![i].amount.toString()),
+                                  Text(payOuts.listPayOuts![i].type.toString()),
+                                ],
+                              ),
+
+                            ),
+                          );
+
+                        },
+                      ),
+                    ),
 
 
                   ]

@@ -1,4 +1,6 @@
-class PayOuts {
+import 'package:flutter/cupertino.dart';
+
+class PayOuts with ChangeNotifier {
   int? ordersCount;
   int? successOrdersCount;
   int? balance;
@@ -26,6 +28,7 @@ class PayOuts {
     this.listPayOuts = listPayOuts;
 
     }
+  print(json['list'] );
   }
 
   Map<String,dynamic> toJson()

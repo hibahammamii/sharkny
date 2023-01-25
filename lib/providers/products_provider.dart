@@ -91,17 +91,18 @@ getSliderImage() async{
     loadingProducts = false;
     notifyListeners();
 }
-  getProductsTopSales() async {
+  getProductsTopSales(String? token) async {
     try {
       loadingProducts = true;
 
       var response = await Api.instance.apiRequest(
-          RequestType.Get, Uri.parse("${Constants.baseUrl}/api/top_sales"));
+          RequestType.Get, Uri.parse("${Constants.baseUrl}/api/products"),
+          headers:{"authorization": "Bearer $token"});
       print(response);
       var list = <Product>[];
 
       if (response != null) {
-        for (var item in response) {
+        for (var item in response['data']) {
           //if (item['slug'] != "uncategorized" && item['count'] > 0)
           {
             list.add(Product.fromJson(item));
@@ -122,16 +123,17 @@ getSliderImage() async{
     notifyListeners();
   }
 
-  getProductsNewArrival() async {
+  getProductsNewArrival(String? token) async {
     try {
       loadingProducts = true;
       var list = <Product>[];
 
       var response = await Api.instance.apiRequest(
-          RequestType.Get, Uri.parse("${Constants.baseUrl}/api/new_arrival"));
+          RequestType.Get, Uri.parse("${Constants.baseUrl}/api/products"),
+      headers:{"authorization": "Bearer $token"});
 
       if (response != null) {
-        for (var item in response) {
+        for (var item in response['data']) {
           //if (item['slug'] != "uncategorized" && item['count'] > 0)
           {
             list.add(Product.fromJson(item));

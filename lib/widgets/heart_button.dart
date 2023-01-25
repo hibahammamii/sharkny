@@ -40,7 +40,7 @@ class _HeartButtonState extends State<HeartButton> {
         onPressed: () async {
           await locator<UserData>().getUser();
 
-          bool? loggedIn = locator<UserData>().loggedIn?? false;
+          bool? loggedIn = locator<UserData>().loggedIn;
           if (!loggedIn) {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
@@ -78,7 +78,7 @@ class _HeartButtonState extends State<HeartButton> {
       onPressed: () async {
         await locator<UserData>().getUser();
 
-        bool? loggedIn = locator<UserData>().loggedIn?? false;
+        bool? loggedIn = locator<UserData>().loggedIn;
         if (!loggedIn) {
           ScaffoldMessenger.of(context).hideCurrentSnackBar();
           ScaffoldMessenger.of(context).showSnackBar(

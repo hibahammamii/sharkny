@@ -44,7 +44,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => WishListModel());
   locator.registerLazySingleton(() => SearchModel());
   locator.registerLazySingleton(() => PayOutsProvider());
-  locator.registerLazySingleton(() => OrdersProvider());
+  //locator.registerLazySingleton(() => OrdersProvider());
 
 
 

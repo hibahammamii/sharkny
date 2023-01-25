@@ -65,8 +65,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         cpassword: _cPassword,
         email: _email,
         name: _name,
-        phone: _phone,
-        linkName: _fbLink);
+        // phone: _phone,
+        // linkName: _fbLink
+        );
   }
 
   @override
@@ -232,38 +233,38 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 25,
                     ),
-                    TextFormField(
-                      cursorColor: colorAccent,
-                      keyboardType: TextInputType.emailAddress,
-                      cursorWidth: 1,
-                      textAlign: TextAlign.start,
-                      textDirection: TextDirection.ltr,
-                      autofocus: false,
-                      style: const TextStyle(
-                          color: blackColor,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 15),
-                      decoration: InputDecoration(
-                        labelText:
-                            AppLocalizations.of(context)!.translate("phone"),
-                        labelStyle: AppTextStyle.subTextStyle,
-                        focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: colorAccent)),
-                        border: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: lightGrey)),
-                      ),
-                      onSaved: (val) {
-                        _phone = val;
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty && value.length < 11) {
-                          return "";
-                        }
-                      },
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
+                    // TextFormField(
+                    //   cursorColor: colorAccent,
+                    //   keyboardType: TextInputType.emailAddress,
+                    //   cursorWidth: 1,
+                    //   textAlign: TextAlign.start,
+                    //   textDirection: TextDirection.ltr,
+                    //   autofocus: false,
+                    //   style: const TextStyle(
+                    //       color: blackColor,
+                    //       fontWeight: FontWeight.w800,
+                    //       fontSize: 15),
+                    //   decoration: InputDecoration(
+                    //     labelText:
+                    //         AppLocalizations.of(context)!.translate("phone"),
+                    //     labelStyle: AppTextStyle.subTextStyle,
+                    //     focusedBorder: const UnderlineInputBorder(
+                    //         borderSide: BorderSide(color: colorAccent)),
+                    //     border: const UnderlineInputBorder(
+                    //         borderSide: BorderSide(color: lightGrey)),
+                    //   ),
+                    //   onSaved: (val) {
+                    //     _phone = val;
+                    //   },
+                    //   validator: (value) {
+                    //     if (value!.isEmpty && value.length < 11) {
+                    //       return "";
+                    //     }
+                    //   },
+                    // ),
+                    // const SizedBox(
+                    //   height: 25,
+                    // ),
                     TextFormField(
                       cursorColor: colorAccent,
                       controller: _passwordController,
@@ -341,33 +342,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 25,
                     ),
-                    TextFormField(
-                      cursorColor: colorAccent,
-                      keyboardType: TextInputType.emailAddress,
-                      cursorWidth: 1,
-                      textAlign: TextAlign.start,
-                      textDirection: TextDirection.ltr,
-                      autofocus: false,
-                      style: const TextStyle(
-                          color: blackColor,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 15),
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!
-                            .translate("facebook_link"),
-                        labelStyle: AppTextStyle.subTextStyle,
-                        focusedBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: colorAccent)),
-                        border: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: lightGrey)),
-                      ),
-                      onSaved: (val) {
-                        _fbLink = val;
-                      },
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
+                    // TextFormField(
+                    //   cursorColor: colorAccent,
+                    //   keyboardType: TextInputType.emailAddress,
+                    //   cursorWidth: 1,
+                    //   textAlign: TextAlign.start,
+                    //   textDirection: TextDirection.ltr,
+                    //   autofocus: false,
+                    //   style: const TextStyle(
+                    //       color: blackColor,
+                    //       fontWeight: FontWeight.w800,
+                    //       fontSize: 15),
+                    //   decoration: InputDecoration(
+                    //     labelText: AppLocalizations.of(context)!
+                    //         .translate("facebook_link"),
+                    //     labelStyle: AppTextStyle.subTextStyle,
+                    //     focusedBorder: const UnderlineInputBorder(
+                    //         borderSide: BorderSide(color: colorAccent)),
+                    //     border: const UnderlineInputBorder(
+                    //         borderSide: BorderSide(color: lightGrey)),
+                    //   ),
+                    //   onSaved: (val) {
+                    //     _fbLink = val;
+                    //   },
+                    // ),
+                    // const SizedBox(
+                    //   height: 25,
+                    // ),
 
                     // if (isVendor)
                     //   Column(

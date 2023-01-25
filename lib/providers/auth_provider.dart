@@ -30,10 +30,7 @@ class AuthProvider with ChangeNotifier {
   bool loading = false;
   bool updateLoading = false;
 
-  setState() {
-
-
-  }
+  setState() {}
 
   void logIn(BuildContext context, GlobalKey<ScaffoldState> _scaffoldKey,
       {String? email, String? password}) async {
@@ -44,156 +41,65 @@ class AuthProvider with ChangeNotifier {
     // print(fcmToken);
     var response;
     try {
-       response = await Api.instance.apiRequest(
-          RequestType.Post,
-          Uri.parse(
-              'https://test.sharkny.net/api/auth/login?email=$email&password=$password')
-       );
-       if (response != null) {
-         locator<UserData>().setCurrentUser = response['user'];
-         locator<UserData>().currentUser!.token = response['access_token'];
-         locator<UserData>().loggedIn = true;
-         await Prefrence.setBool('loggedIn', true);
+      response = await Api.instance.apiRequest(RequestType.Post,
+          Uri.parse('https://event-reg.app/flutter_test/api/login'),
+          body: {
+            "email": email,
+            "password": password,
+          },
+          headers: {
+            "Content-Type": "application/json"
+          });
+      if (response != null) {
+        locator<UserData>().setCurrentUser = response['data'];
+        locator<UserData>().currentUser!.token = response['data']['token'];
+        locator<UserData>().loggedIn = true;
+        await Prefrence.setBool('loggedIn', true);
 
-         await Prefrence.setString(
-           PrefKeys.USER,
-           jsonEncode(locator<UserData>().currentUser),
-         );
-         //logined
+        await Prefrence.setString(
+          PrefKeys.USER,
+          jsonEncode(locator<UserData>().currentUser),
+        );
+        //logined
 
-         //print(locator<CartProvider>().items.length);
-         // if (locator<CartProvider>().items.length > 0) {
+        //print(locator<CartProvider>().items.length);
+        // if (locator<CartProvider>().items.length > 0) {
 
-         /* if (counter == locator<CartProvider>().items.length)
+        /* if (counter == locator<CartProvider>().items.length)
           await locator<CartProvider>().getLoginedCart(firstLoad: true);*/
-         // } else {
-         //
-         // }
-         //}
-         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-         ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(
-             duration: const Duration(milliseconds: 800),
-             backgroundColor: dangerColor,
-             content: Text(
-               AppLocalizations.of(context)!.translate("LogIn_successfully"),
-               textAlign: TextAlign.start,
-               style: const TextStyle(
-                 color: Colors.white,
-                 fontSize: 14.0,
-                 fontWeight: FontWeight.bold,
-               ),
-             ),
-           ),
-         );
-
-         locator<NavigationServices>()
-             .navigateToReplacmentUntil(HomeScreen.routeName);
-         //
-       } else {
-         //danger color
-         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-         ScaffoldMessenger.of(context).showSnackBar(
-           SnackBar(
-             duration: const Duration(milliseconds: 800),
-             backgroundColor: dangerColor,
-             content: Text(
-               AppLocalizations.of(context)!.translate("failed_login"),
-               textAlign: TextAlign.start,
-               style: const TextStyle(
-                 color: Colors.white,
-                 fontSize: 14.0,
-                 fontWeight: FontWeight.bold,
-               ),
-             ),
-           ),
-         );
-       }
-      // print(response);
-
-      }
-      catch (e) {
-        print(e);
-        return null;
-    }
-
-
-    loading = false;
-    setState();
-  }
-  void signUp(
-      BuildContext context,
-      GlobalKey<ScaffoldState> _scaffoldKey, {
-        String? name,
-        String? email,
-        String? password,
-        String? cpassword,
-        String? phone,
-        String? linkName
-      }) async {
-    clearData();
-    setState();
-    await check().then((intenet) async {
-      if (intenet != null && intenet) {
-    var response = await Api.instance.apiRequest(
-        RequestType.Post,Uri.parse('https://test.sharkny.net/api/auth/register?name=$name'
-        '&email=$email&password=$password&password_confirmation=$cpassword'
-        '&phone=$phone&link_name=$linkName')).timeout(const Duration(seconds: 20),onTimeout:noConnection(context));
-    //print(response);
-    if (response != null) {
-      //here call show
-      //sucess color
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(seconds: 2),
-          backgroundColor: colorPrimary,
-          content: Text(
-            AppLocalizations.of(context)!.translate("register_successfully"),
-            textAlign: TextAlign.start,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      );
-      logIn(context, _scaffoldKey, email: email, password: password);
-
-      locator<NavigationServices>()
-          .navigateToReplacmentUntil(HomeScreen.routeName);
-    } else {
-      //here call show
-      //danger color
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(milliseconds: 800),
-          backgroundColor: dangerColor,
-          content: Text(
-            AppLocalizations.of(context)!.translate("failed_register"),
-            textAlign: TextAlign.start,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14.0,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      );
-    }
-    loading = false;
-    setState();
-  }
-      else{
+        // } else {
+        //
+        // }
+        //}
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             duration: const Duration(milliseconds: 800),
             backgroundColor: dangerColor,
             content: Text(
-              AppLocalizations.of(context)!.translate("check_internet_connections"),
+              AppLocalizations.of(context)!.translate("LogIn_successfully"),
+              textAlign: TextAlign.start,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        );
+
+        locator<NavigationServices>()
+            .navigateToReplacmentUntil(HomeScreen.routeName);
+        //
+      } else {
+        //danger color
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(milliseconds: 800),
+            backgroundColor: dangerColor,
+            content: Text(
+              AppLocalizations.of(context)!.translate("failed_login"),
               textAlign: TextAlign.start,
               style: const TextStyle(
                 color: Colors.white,
@@ -204,19 +110,121 @@ class AuthProvider with ChangeNotifier {
           ),
         );
       }
+      // print(response);
 
+    } catch (e) {
+      print(e);
+      return null;
+    }
+
+    loading = false;
+    setState();
+  }
+
+  void signUp(BuildContext context, GlobalKey<ScaffoldState> _scaffoldKey,
+      {String? name,
+      String? email,
+      String? password,
+      String? cpassword,
+      String? phone,
+      String? linkName}) async {
+    clearData();
+    setState();
+    await check().then((intenet) async {
+      if (intenet != null && intenet) {
+        var response = await Api.instance.apiRequest(
+            RequestType.Post,
+            Uri.parse(
+              'https://event-reg.app/flutter_test/api/register',
+            ),
+            body: {
+              "name": name,
+              "email": email,
+              "password": password,
+              "c_password": cpassword,
+            },
+        headers: {
+              "Content-Type": "application/json"
+            });
+        print(response);
+        if (response != null) {
+          if(response['success'] == true)
+
+
+          //here call show
+          //sucess color
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: const Duration(seconds: 2),
+              backgroundColor: colorPrimary,
+              content: Text(
+                AppLocalizations.of(context)!
+                    .translate("register_successfully"),
+                textAlign: TextAlign.start,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          );
+          logIn(context, _scaffoldKey, email: email, password: password);
+
+          locator<NavigationServices>()
+              .navigateToReplacmentUntil(HomeScreen.routeName);
+        } else {
+          //here call show
+          //danger color
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: const Duration(milliseconds: 800),
+              backgroundColor: dangerColor,
+              content: Text(
+                AppLocalizations.of(context)!.translate("failed_register"),
+                textAlign: TextAlign.start,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          );
+        }
+        loading = false;
+        setState();
+      } else {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            duration: const Duration(milliseconds: 800),
+            backgroundColor: dangerColor,
+            content: Text(
+              AppLocalizations.of(context)!
+                  .translate("check_internet_connections"),
+              textAlign: TextAlign.start,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 14.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        );
+      }
     });
     loading = false;
     setState();
   }
 
-
-
-
   clearData() {
     loading = true;
   }
-  noConnection(context){
+
+  noConnection(context) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -235,6 +243,5 @@ class AuthProvider with ChangeNotifier {
     );
     loading = false;
     setState();
-
   }
 }

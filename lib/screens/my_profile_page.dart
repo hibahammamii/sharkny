@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sharekny_app/models/user_model.dart';
 import 'package:sharekny_app/screens/home_screen.dart';
+import 'package:sharekny_app/screens/welcome_screen.dart';
 import 'package:sharekny_app/services/localization/app_localization.dart';
 import 'package:sharekny_app/services/navigation_services.dart';
 import 'package:sharekny_app/utilities/constants.dart';
@@ -199,6 +200,7 @@ class _MyProfileState extends State<MyProfile> {
                     text: AppLocalizations.of(context)!.translate("log_out"),
                     onTap: () async{
                       await locator<UserData>().logout();
+
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -217,7 +219,7 @@ class _MyProfileState extends State<MyProfile> {
                     );
 
                     locator<NavigationServices>()
-                        .navigateToReplacmentUntil(HomeScreen.routeName);
+                        .navigateToReplacmentUntil(WelcomeScreen.routeName);
                     },
                     width: double.infinity),)
                     ]))));

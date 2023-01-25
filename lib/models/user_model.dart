@@ -66,7 +66,7 @@ class User {
   }
 }
 class UserData with ChangeNotifier {
-  bool? loggedIn;
+  bool loggedIn = false;
 
  Future<bool?> getLogged() async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -121,9 +121,9 @@ class UserData with ChangeNotifier {
     }
   }
   Future<void> logout() async {
-
-    _currentUser = null;
     loggedIn = false;
+    _currentUser = null;
+
     final LocalStorage storage = LocalStorage("sarekny");
     try {
       final ready = await storage.ready;

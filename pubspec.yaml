@@ -52,6 +52,7 @@ dependencies:
   cached_network_image: ^3.2.0
   search_widget: ^1.0.2
   badges: ^2.0.2
+  rate_in_stars: ^0.0.3
 
 
 

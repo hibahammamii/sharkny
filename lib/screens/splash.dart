@@ -25,7 +25,7 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    loginCheck();
+   // loginCheck();
   }
 
   @override
@@ -40,15 +40,15 @@ class SplashScreenState extends State<SplashScreen> {
             )));
   }
 
-  loginCheck() async {
-    navigation(HomeScreen.routeName);
-    locator<UserData>().getUser();
-    if(locator<UserData>().currentUser!.id != null) {
-      await locator<WishListModel>().WishListOnline();
-      await locator<PayOutsProvider>().fetchPayOuts(
-          locator<UserData>().currentUser!.id);
-    }
-  }
+  // loginCheck() async {
+  //   navigation(HomeScreen.routeName);
+  //   locator<UserData>().getUser();
+  //   if(locator<UserData>().currentUser!.id != null) {
+  //     await locator<WishListModel>().WishListOnline();
+  //     await locator<PayOutsProvider>().fetchPayOuts(
+  //         locator<UserData>().currentUser!.id);
+  //   }
+  // }
 
   navigation(var page) {
     Future.delayed(const Duration(milliseconds: 2000),

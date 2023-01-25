@@ -36,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
   GlobalKey<RefreshIndicatorState>();
   TextEditingController search = TextEditingController();
+  String? token;
   @override
   void dispose() {
     search.dispose();
@@ -47,6 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     locator<UserData>().getUser();
     locator<WishListModel>().WishListOnline();
+    if( locator<UserData>().currentUser != null) {
+      token = locator<UserData>().currentUser!.token;
+    }
+    locator<ProductsProvider>().getProductsNewArrival(token);
+    locator<ProductsProvider>().getProductsTopSales(token);
     super.initState();
 
   }
@@ -56,10 +62,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void didChangeDependencies() {
     // Provider.of<Categories>(context).fetchAndSetProducts().then((_){});
 
-    locator<CategoriesProvider>().getCategories();
-    locator<ProductsProvider>().getProductsNewArrival();
-    locator<ProductsProvider>().getProductsTopSales();
-    locator<ProductsProvider>().getSliderImage();
+    // locator<CategoriesProvider>().getCategories();
+    // locator<ProductsProvider>().getProductsNewArrival(token);
+    // locator<ProductsProvider>().getProductsTopSales(token);
+    // locator<ProductsProvider>().getSliderImage();
 
 
     super.didChangeDependencies();
@@ -82,9 +88,9 @@ class _HomeScreenState extends State<HomeScreen> {
         color: redColor,
         key: _refreshIndicatorKey,
     onRefresh: () async {
-     await locator<ProductsProvider>().getProductsNewArrival();
-      await locator<ProductsProvider>().getProductsTopSales();
-     await locator<ProductsProvider>().getSliderImage();
+     // await locator<ProductsProvider>().getProductsNewArrival(token);
+     //  await locator<ProductsProvider>().getProductsTopSales(token);
+     // await locator<ProductsProvider>().getSliderImage();
     },
           child: SingleChildScrollView(
             child: Container(
@@ -96,58 +102,58 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: SizedBox(
-                        height: height * 0.30,
-                        width: double.infinity,
-                        child:
-                          Consumer<ProductsProvider>(builder: (_,data,__)
-                          {
-                            if (data.loadingProducts == true) {
-                              return Container(
-                                color: Colors.white,
-                                child: Center(
-                                  child: Constants.loadingElement(),
-                                ),
-                              );
-                            }
-                            return data.sliderImage.isNotEmpty
-                                ? SizedBox(
-                                width: 120,
-                                height: 110,
-                              child:Swiper(
-                                itemCount: data.sliderImage.length,
-                              autoplay: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                return ClipRRect(
-                                  borderRadius: BorderRadius.circular(6),
-                                  child: CachedNetworkImage(
-                                    imageUrl: data.sliderImage[index],
-                                    width: 120,
-                                    height: 110,
-                                    placeholder: (context, url) => const CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(colorAccent),
-                                      strokeWidth: 2,
-                                    ),
-                                    errorWidget: (context, url, error) => Icon(Icons.error),
-                                    fit: BoxFit.cover,
-
-                                  ),
-                                );
-
-                              }
-
-                              )):
-                                Container();
-
-
-                          })
-
-
-                        )),
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(30),
+                  //   ),
+                  //   child: SizedBox(
+                  //       height: height * 0.30,
+                  //       width: double.infinity,
+                  //       child:
+                  //         Consumer<ProductsProvider>(builder: (_,data,__)
+                  //         {
+                  //           if (data.loadingProducts == true) {
+                  //             return Container(
+                  //               color: Colors.white,
+                  //               child: Center(
+                  //                 child: Constants.loadingElement(),
+                  //               ),
+                  //             );
+                  //           }
+                  //           return data.sliderImage.isNotEmpty
+                  //               ? SizedBox(
+                  //               width: 120,
+                  //               height: 110,
+                  //             child:Swiper(
+                  //               itemCount: data.sliderImage.length,
+                  //             autoplay: true,
+                  //             itemBuilder: (BuildContext context, int index) {
+                  //               return ClipRRect(
+                  //                 borderRadius: BorderRadius.circular(6),
+                  //                 child: CachedNetworkImage(
+                  //                   imageUrl: data.sliderImage[index],
+                  //                   width: 120,
+                  //                   height: 110,
+                  //                   placeholder: (context, url) => const CircularProgressIndicator(
+                  //                     valueColor: AlwaysStoppedAnimation<Color>(colorAccent),
+                  //                     strokeWidth: 2,
+                  //                   ),
+                  //                   errorWidget: (context, url, error) => Icon(Icons.error),
+                  //                   fit: BoxFit.cover,
+                  //
+                  //                 ),
+                  //               );
+                  //
+                  //             }
+                  //
+                  //             )):
+                  //               Container();
+                  //
+                  //
+                  //         })
+                  //
+                  //
+                  //       )),
                   // const SizedBox(
                   //   height: 30,
                   // ),

@@ -134,10 +134,11 @@ class SearchModel extends ChangeNotifier {
   Future<List<Product>> searchProducts({
     String? name="",
     int? categoryID,
+    String? token
 
   }) async {
     try {
-      String endPoint =  "${Constants.baseUrl}/api/search?name=$name";
+      String endPoint =  "${Constants.baseUrl}/api/products";
       if(categoryID != null)
         {
           endPoint += "&category_id=$categoryID";
@@ -149,9 +150,9 @@ class SearchModel extends ChangeNotifier {
        loadingProducts = true;
       var list = <Product>[];
       final data = await Api.instance.apiRequest(
-          RequestType.Get,Uri.parse(endPoint));
+          RequestType.Get,Uri.parse(endPoint),headers:{"authorization": "Bearer $token"});
       if (data != null) {
-        for (var item in data) {
+        for (var item in data['data']) {
           //if (item['slug'] != "uncategorized" && item['count'] > 0)
 
           list.add(Product.fromJson(item));

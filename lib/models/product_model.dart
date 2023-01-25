@@ -17,6 +17,7 @@ class Product with ChangeNotifier{
   String? updatedAt;
   String? image;
   int? quantity;
+  double? rate;
 
 
 
@@ -30,13 +31,15 @@ class Product with ChangeNotifier{
     userId = json["user_id"];
     categoryId = json["category_id"];
     title = json["title"].toString();
-    price = json["price"];
+    price = json["price"] ?? 0;
     storePrice = json["store_price"];
     earn = json["earn"];
-    desc = json["desc"].toString();
+    desc = json["description"].toString();
     status = json["status"];
+    rate = double.parse(json["rate"].toString());
+    print(rate);
     active = json["active"];
-    image = json["pic"];
+    image = json["image"];
     quantity =json["qty"];
     adminNotes = json["admin_notes"].toString();
     createdAt = json["created_at"].toString();

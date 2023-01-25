@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sharekny_app/models/product_model.dart';
 import 'package:sharekny_app/providers/products_provider.dart';
+import 'package:sharekny_app/services/localization/app_localization.dart';
 import 'package:sharekny_app/utilities/constants.dart';
 import 'package:sharekny_app/utilities/get_it.dart';
 import 'package:sharekny_app/utilities/styles.dart';
 import 'package:sharekny_app/widgets/product_item.dart';
 
-class ProductScreen extends StatelessWidget {
+class ProductScreen extends StatefulWidget {
   static const routeName = "ProductScreen";
   final String? title;
   final int? id;
@@ -17,6 +18,19 @@ class ProductScreen extends StatelessWidget {
   const ProductScreen({Key? key, this.title, this.id, this.products})
       : super(key: key);
 
+  @override
+  State<ProductScreen> createState() => _ProductScreenState();
+}
+
+class _ProductScreenState extends State<ProductScreen> {
+  List<Product>? _products ;
+  String? _currentFilter;
+  @override
+  void initState() {
+    _products = widget.products;
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery
@@ -30,7 +44,14 @@ class ProductScreen extends StatelessWidget {
     double appBar = AppBar().preferredSize.height;
 
     return Scaffold(
-      appBar: Constants.appBar(context, title!) as PreferredSizeWidget?,
+      appBar: Constants.appBar(context, widget.title!,action:
+        IconButton(
+            icon: const Icon(
+              Icons.filter_list,
+              color: Colors.black,
+            ),
+            onPressed: () => _products!.isEmpty ? null : _showFilterDialog())
+      ,) as PreferredSizeWidget?,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +60,7 @@ class ProductScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
               child: SizedBox(
                 height: 40,
-                child: Text(title!,
+                child: Text(widget.title!,
                   style: AppTextStyle.mainTextStyle.copyWith(fontSize: 25),),
               ),
             ),
@@ -47,7 +68,7 @@ class ProductScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: SizedBox(
                 height: height - (20 + statusBar + appBar),
-                child: products == null? Consumer<ProductsProvider>(builder: (_, data, __) {
+                child: _products == null? Consumer<ProductsProvider>(builder: (_, data, __) {
                   if (data.loadingProducts == true) {
                     return Container(
                       color: Colors.white,
@@ -65,7 +86,7 @@ class ProductScreen extends StatelessWidget {
                     ), itemBuilder: (ctx, i) =>
                       ChangeNotifierProvider.value(
                         // builder: (c) => products[i],
-                        value: data.items[i],
+                        value: _products![i],
                         child: ProductItem(
                           // products[i].id,
                           // products[i].title,
@@ -73,7 +94,7 @@ class ProductScreen extends StatelessWidget {
                         ),
 
                       ),
-                    itemCount: data.items.length,
+                    itemCount: _products!.length,
                   );
 
                 }):GridView.builder(
@@ -85,7 +106,7 @@ class ProductScreen extends StatelessWidget {
                   ), itemBuilder: (ctx, i) =>
                     ChangeNotifierProvider.value(
                       // builder: (c) => products[i],
-                      value: products![i],
+                      value: _products![i],
                       child: ProductItem(
                         // products[i].id,
                         // products[i].title,
@@ -93,7 +114,7 @@ class ProductScreen extends StatelessWidget {
                       ),
 
                     ),
-                  itemCount:products!.length,
+                  itemCount:_products!.length,
                 )
 
               ),
@@ -103,5 +124,69 @@ class ProductScreen extends StatelessWidget {
       ),
 
     );
+
+  }
+
+  Future<void> _showFilterDialog() {
+    return showModalBottomSheet<void>(
+        context: context,
+        builder: (context) {
+          return Container(
+            padding:  EdgeInsets.all(12),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "filter rate",
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle1!
+                      .apply(fontWeightDelta: 2, fontSizeFactor: 1.2),
+                ),
+                ListTile(
+                  title: Text(
+                    AppLocalizations.of(context)!.translate("high to low"),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+
+                    _filterProducts("high");
+                  },
+                ),
+                ListTile(
+                  title: Text(
+                    AppLocalizations.of(context)!
+                        .translate("low to high"),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+
+                    _filterProducts('low');
+                  },
+                ),
+                Divider(),
+
+              ],
+            ),
+          );
+        });
+  }
+
+  void _filterProducts(String query) {
+
+    if (query == "high") {
+      _products!.sort((a, b) => a.rate!.compareTo(b.rate!));
+      setState(() {
+        _currentFilter = query;
+      });
+    } else if (query ==
+      "low") {
+      _products!.sort((a, b) => b.rate!.compareTo(a.rate!));
+      setState(() {
+        _currentFilter = query;
+      });
+
+    }
   }
 }

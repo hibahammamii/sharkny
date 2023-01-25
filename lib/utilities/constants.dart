@@ -16,7 +16,7 @@ import 'package:sharekny_app/utilities/styles.dart';
 import 'package:sharekny_app/widgets/color_safe_area.dart';
 
 class Constants {
-  static const baseUrl = "https://test.sharkny.net";
+  static const baseUrl = "https://event-reg.app/flutter_test";
   static const assetsIconsPath = "assets/icons/";
   static const assetsImagesPath = "assets/images/";
   static const assetsFilePath = "assets/files/";

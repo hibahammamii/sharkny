@@ -93,20 +93,20 @@ class WelcomeScreen extends StatelessWidget {
                             style: const TextStyle(color: Colors.black),
                           )),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 40,top: 6),
-                      child: InkWell(
-                        onTap: () {
-                          auth.setIsVendor(true);
-                          locator<NavigationServices>()
-                              .navigateTo(SignUpScreen.routeName);},
-                        child: Text(
-                          AppLocalizations.of(context)!
-                              .translate('sign_up_vendor'),
-                          style: TextStyle(color: Colors.black.withOpacity(0.5)),
-                        ),
-                      ),
-                    )
+                    // Padding(
+                    //   padding: const EdgeInsets.only(bottom: 40,top: 6),
+                    //   child: InkWell(
+                    //     onTap: () {
+                    //       auth.setIsVendor(true);
+                    //       locator<NavigationServices>()
+                    //           .navigateTo(SignUpScreen.routeName);},
+                    //     child: Text(
+                    //       AppLocalizations.of(context)!
+                    //           .translate('sign_up_vendor'),
+                    //       style: TextStyle(color: Colors.black.withOpacity(0.5)),
+                    //     ),
+                    //   ),
+                    // )
 
                   ],
                 ),

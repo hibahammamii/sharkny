@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rate_in_stars/rate_in_stars.dart';
 import 'package:sharekny_app/models/product_model.dart';
 import 'package:sharekny_app/providers/products_provider.dart';
 import 'package:sharekny_app/screens/product_detail_screen.dart';
@@ -29,7 +30,7 @@ class ProductItem extends StatelessWidget {
       },
       child: SingleChildScrollView(
         child: Container(
-          width: 140,
+          width: 150,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -68,53 +69,64 @@ class ProductItem extends StatelessWidget {
                     const SizedBox(
                       height: 1,
                     ),
-                    Text(
-                      "${AppLocalizations.of(context)!.translate("gain")} :",
-                      style: AppTextStyle.subTextStyle
-                          .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                    RatingStars(
+                      editable: true,
+                      rating: product.rate ?? 0.0,
+                      color: Colors.amber,
+                      iconSize: 12,
                     ),
+                    // Text(
+                    //   "${AppLocalizations.of(context)!.translate("gain")} :",
+                    //   style: AppTextStyle.subTextStyle
+                    //       .copyWith(fontSize: 12, fontWeight: FontWeight.w400),
+                    // ),
+                    // const SizedBox(
+                    //   height: 2,
+                    // ),
+                    // SizedBox(
+                    //   width: 140,
+                    //   child: SingleChildScrollView(
+                    //     scrollDirection: Axis.horizontal,
+                    //     child: Row(
+                    //       children: [
+                    //         Container(
+                    //           // decoration: BoxDecoration(
+                    //           //     borderRadius: const BorderRadius.all(
+                    //           //         Radius.circular(25)),
+                    //           //     color: dangerColor.withOpacity(0.5)),
+                    //           child: Text(product.earn.toString(),
+                    //               style: AppTextStyle.subTextStyle
+                    //                   .copyWith(fontSize: 12,fontWeight: FontWeight.bold)),
+                    //         ),
+                    //         Padding(
+                    //           padding: const EdgeInsets.only(left: 3, right: 3),
+                    //           child: Text(
+                    //             "${AppLocalizations.of(context)!.translate("from")}",
+                    //             style: AppTextStyle.subTextStyle.copyWith(
+                    //                 fontSize: 12, fontWeight: FontWeight.w400),
+                    //           ),
+                    //         ),
+                    //         Container(
+                    //           // decoration: BoxDecoration(
+                    //           //     borderRadius: const BorderRadius.all(
+                    //           //         Radius.circular(25)),
+                    //           //     color: colorAccent.withOpacity(0.2)),
+                    //           child: Text(product.price.toString(),
+                    //               style: AppTextStyle.subTextStyle
+                    //                   .copyWith(fontSize: 12,fontWeight: FontWeight.bold)),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(
-                      height: 2,
-                    ),
-                    SizedBox(
-                      width: 140,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            Container(
-                              // decoration: BoxDecoration(
-                              //     borderRadius: const BorderRadius.all(
-                              //         Radius.circular(25)),
-                              //     color: dangerColor.withOpacity(0.5)),
-                              child: Text(product.earn.toString(),
-                                  style: AppTextStyle.subTextStyle
-                                      .copyWith(fontSize: 12,fontWeight: FontWeight.bold)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 3, right: 3),
-                              child: Text(
-                                "${AppLocalizations.of(context)!.translate("from")}",
-                                style: AppTextStyle.subTextStyle.copyWith(
-                                    fontSize: 12, fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                            Container(
-                              // decoration: BoxDecoration(
-                              //     borderRadius: const BorderRadius.all(
-                              //         Radius.circular(25)),
-                              //     color: colorAccent.withOpacity(0.2)),
-                              child: Text(product.price.toString(),
-                                  style: AppTextStyle.subTextStyle
-                                      .copyWith(fontSize: 12,fontWeight: FontWeight.bold)),
-                            ),
-                          ],
-                        ),
-                      ),
+                      height:20 ,
                     ),
                   ],
+
                 ),
-              )
+              ),
+
             ],
           ),
         ),

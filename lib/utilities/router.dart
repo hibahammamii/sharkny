@@ -40,8 +40,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) =>  PayOutsScreen());
     case MyProfile.routeName:
       return MaterialPageRoute(builder: (context) =>  MyProfile());
-    case OrdersScreen.routeName:
-      return MaterialPageRoute(builder: (context) =>  OrdersScreen());
+    // case OrdersScreen.routeName:
+    //   return MaterialPageRoute(builder: (context) =>  OrdersScreen());
     case ProductDetailScreen.routeName:
       return MaterialPageRoute(
           builder: (context) => ProductDetailScreen(

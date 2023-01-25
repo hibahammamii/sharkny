@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:search_widget/search_widget.dart';
 import 'package:sharekny_app/models/category_model.dart';
+import 'package:sharekny_app/models/user_model.dart';
 import 'package:sharekny_app/providers/categories_provider.dart';
 import 'package:sharekny_app/providers/search_model.dart';
 import 'package:sharekny_app/services/localization/app_localization.dart';
@@ -33,7 +34,8 @@ class _SearchScreenState extends State<SearchScreen> {
         locator<SearchModel>().searchProducts(name: textEditingController.text,categoryID: categoryModel!.id);
       }
     else {
-      locator<SearchModel>().searchProducts(name: textEditingController.text,);
+      locator<SearchModel>().searchProducts(name: textEditingController.text,token:
+      locator<UserData>().currentUser!.token);
     }
   }
 
